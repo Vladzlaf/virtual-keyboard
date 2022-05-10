@@ -65,6 +65,7 @@ const virtualKeyboard = {
     this.elements.keyboard.classList.add('keyboard');
     this.elements.container.classList.add('keyboard-keys');
     this.elements.container.appendChild(this.createKeys());
+    // this.elements.container.appendChild(this.classActive());
     this.elements.keys = this.elements.container.querySelectorAll('.keyboard-key');
     this.elements.keyboard.appendChild(this.elements.container);
     document.body.appendChild(this.elements.keyboard);
@@ -76,6 +77,17 @@ const virtualKeyboard = {
   },
 
   classActive() {
+    keys.forEach(key => {
+      key.setAttribute('keyname', key.innerText);
+    } )
+
+    window.addEventListener('keydown', function(event){
+      for (let i = 0; i < keys.length; i++){
+    if (event.key == keys[i].getAttribute('keyname')){
+      console.log(keys[i])
+        }
+      }
+    })
   },
 
   createKeys() {
@@ -91,6 +103,13 @@ const virtualKeyboard = {
       // keyButton.setAttribute('data', key);
       keyButton.setAttribute('type', 'button');
       keyButton.classList.add('keyboard-key');
+      // keyButton.setAttribute('keyname', key);
+
+      // window.addEventListener('keydown', function(event){
+      // if (event.key == key.getAttribute('keyname')){
+      //   console.log(key)
+      //   }}
+      // )
 
       // console.log (document.querySelector(`.keyboard-key[data="${key}"]`))
 
@@ -300,3 +319,4 @@ const virtualKeyboard = {
 window.addEventListener('DOMContentLoaded', () => {
   virtualKeyboard.init();
 });
+
