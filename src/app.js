@@ -1,8 +1,13 @@
+/* eslint-disable no-duplicate-case */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-undef */
+/* eslint-disable max-len */
+/* eslint-disable no-restricted-syntax */
 const virtualKeyboard = {
   elements: {
     keyboard: '',
     container: '',
-    keys: []
+    keys: [],
   },
 
   event: {
@@ -12,8 +17,8 @@ const virtualKeyboard = {
   propertis: {
     value: '',
     capsLock: false,
-    shift: false
-  }, 
+    shift: false,
+  },
 
   init() {
     // Создание основных элементов
@@ -23,17 +28,17 @@ const virtualKeyboard = {
     this.elements.keyboard.classList.add('keyboard');
     this.elements.container.classList.add('keyboard-keys');
     this.elements.container.appendChild(this.createKeys());
-    this.elements.keys = this.elements.container.querySelectorAll('.keyboard-key')
+    this.elements.keys = this.elements.container.querySelectorAll('.keyboard-key');
     // Добавление в DOM
     this.elements.keyboard.appendChild(this.elements.container);
     document.body.appendChild(this.elements.keyboard);
     // Добавление созданного контента
-    document.querySelectorAll('.keyboard-input').forEach(item => {
-      this.open(item.value, currentValue =>{
+    document.querySelectorAll('.keyboard-input').forEach((item) => {
+      this.active(item.value, (currentValue) => {
         item.value = currentValue;
       });
     });
-  }, 
+  },
 
   createKeys() {
     const fragment = document.createDocumentFragment();
@@ -45,158 +50,130 @@ const virtualKeyboard = {
       'Ctrl', 'Win', 'Alt', 'space', 'Alt', 'arrow-back', 'arrow-downward', 'arrow-forward', 'Ctrl'];
 
     const shiftKeys = [
-        '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'backspace',
-        'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '{', '}', 'Del',
-        'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ':', '"', 'enter',
-        'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', '?', 'arrow-upward', 'Shift-right',
-        'Ctrl', 'Win', 'Alt', 'space', 'Alt', 'arrow-back', 'arrow-downward', 'arrow-forward', 'Ctrl'];
+      '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'backspace',
+      'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '{', '}', 'Del',
+      'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ':', '"', 'enter',
+      'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', '?', 'arrow-upward', 'Shift-right',
+      'Ctrl', 'Win', 'Alt', 'space', 'Alt', 'arrow-back', 'arrow-downward', 'arrow-forward', 'Ctrl'];
 
     // Создание других кнопок
-    const createOthers = (key) => {
-      return `<div>${key}</div>`;
-    };
-
-      keys.forEach(key => {
+    const createOthers = (key) => `<div>${key}</div>`;
+    keys.forEach((key) => {
       const keyButton = document.createElement('button');
       const lineBR = ['backspace', 'Del', 'enter', 'Shift-right'].indexOf(key) !== -1;
 
       // Добавление атрибутов и классов
-        keyButton.setAttribute('type', 'button');
-        keyButton.classList.add('keyboard-key');
+      keyButton.setAttribute('type', 'button');
+      keyButton.classList.add('keyboard-key');
 
       switch (key) {
-      case 'Tab': 
-        keyButton.classList.add('keyboard-key-medium');
-        keyButton.innerHTML = createOthers('Tab')
+        case 'Tab':
+          keyButton.classList.add('keyboard-key-medium');
+          keyButton.innerHTML = createOthers('Tab');
 
-        keyButton.addEventListener('click', () => {
-          this.propertis.value += '   ';
-          this.triggerEvents('input');
-        });
+          keyButton.addEventListener('click', () => {
+            this.propertis.value += '   ';
+            this.triggerEvents('input');
+          });
 
-        break;
+          break;
 
-      case 'Shift': 
-        keyButton.classList.add('keyboard-key-wide');
-        keyButton.innerHTML = createOthers('Shift')
+        case 'Shift':
+          keyButton.classList.add('keyboard-key-wide');
+          keyButton.innerHTML = createOthers('Shift');
 
-        keyButton.addEventListener('mousedown', () => {
-          keys = shiftKeys
-          this.shiftPress()
-        });
+          keyButton.addEventListener('mousedown', () => {
+            keys = shiftKeys;
+            this.shiftPress();
+          });
 
-        break;
+          break;
 
-      case 'Shift-right': 
-        keyButton.classList.add('keyboard-key-wide');
-        keyButton.innerHTML = createOthers('Shift')
+        case 'Shift-right':
+          keyButton.classList.add('keyboard-key-wide');
+          keyButton.innerHTML = createOthers('Shift');
 
-        keyButton.addEventListener('click', () => {
-          // this.propertis.value = this.propertis.value.substring(0, this.propertis.value.length - 1);
-          // this.triggerEvents('oninput');
-        });
+          break;
 
-        break;
+        case 'Ctrl':
+          keyButton.classList.add('keyboard-key');
+          keyButton.innerHTML = createOthers('Ctrl');
 
-      case 'Ctrl': 
-        keyButton.classList.add('keyboard-key');
-        keyButton.innerHTML = createOthers('Ctrl')
+          break;
 
-        keyButton.addEventListener('click', () => {
-          // this.propertis.value = this.propertis.value.substring(0, this.propertis.value.length - 1);
-          // this.triggerEvents('oninput');
-        });
+        case 'Win':
+          keyButton.classList.add('keyboard-key');
+          keyButton.innerHTML = createOthers('Win');
 
-        break;
+          break;
 
-      case 'Win': 
-        keyButton.classList.add('keyboard-key');
-        keyButton.innerHTML = createOthers('Win')
+        case 'Alt':
+          keyButton.classList.add('keyboard-key');
+          keyButton.innerHTML = createOthers('Alt');
 
-        keyButton.addEventListener('click', () => {
-          // this.propertis.value = this.propertis.value.substring(0, this.propertis.value.length - 1);
-          // this.triggerEvents('oninput');
-        });
+          break;
 
-        break;
+        case 'Ctrl':
+          keyButton.classList.add('keyboard-key-wide');
+          keyButton.innerHTML = createOthers('Ctrl');
 
-      case 'Alt': 
-        keyButton.classList.add('keyboard-key');
-        keyButton.innerHTML = createOthers('Alt')
+          break;
 
-        keyButton.addEventListener('click', () => {
-          // this.propertis.value = this.propertis.value.substring(0, this.propertis.value.length - 1);
-          // this.triggerEvents('oninput');
-        });
+        case 'Del':
+          keyButton.classList.add('keyboard-key-wide');
+          keyButton.innerHTML = createOthers('Del');
+          keyButton.addEventListener('click', () => {
+            this.propertis.value = this.propertis.value.slice(1);
+            this.triggerEvents('input');
+          });
 
-        break;
+          break;
 
-      case 'Ctrl': 
-        keyButton.classList.add('keyboard-key-wide');
-        keyButton.innerHTML = createOthers('Ctrl')
+        case 'arrow-back':
+          keyButton.classList.add('keyboard-key');
+          keyButton.innerHTML = createOthers('🠔');
 
-        keyButton.addEventListener('click', () => {
-          // this.propertis.value = this.propertis.value.substring(0, this.propertis.value.length - 1);
-          // this.triggerEvents('oninput');
-        });
+          keyButton.addEventListener('click', () => {
+            this.propertis.value += '🠔';
+            this.triggerEvents('input');
+          });
 
-        break;
+          break;
 
-      case 'Del': 
-        keyButton.classList.add('keyboard-key-wide');
-        keyButton.innerHTML = createOthers('Del')
-        keyButton.addEventListener('click', () => {
-          this.propertis.value = this.propertis.value.slice(1);
-          this.triggerEvents('input');
-      });
+        case 'arrow-downward':
+          keyButton.classList.add('keyboard-key');
+          keyButton.innerHTML = createOthers('🠗');
 
-        break;
+          keyButton.addEventListener('click', () => {
+            this.propertis.value += '🠗';
+            this.triggerEvents('input');
+          });
 
-      case 'arrow-back': 
-        keyButton.classList.add('keyboard-key');
-        keyButton.innerHTML = createOthers('🠔');
+          break;
 
-        keyButton.addEventListener('click', () => {
-          this.propertis.value += '🠔';
-          this.triggerEvents('input');
-        });
+        case 'arrow-forward':
+          keyButton.classList.add('keyboard-key');
+          keyButton.innerHTML = createOthers('🠖');
 
-        break;
+          keyButton.addEventListener('click', () => {
+            this.propertis.value += '🠖';
+            this.triggerEvents('input');
+          });
 
-      case 'arrow-downward': 
-        keyButton.classList.add('keyboard-key');
-        keyButton.innerHTML = createOthers('🠗');
+          break;
 
-        keyButton.addEventListener('click', () => {
-          this.propertis.value += '🠗';
-          this.triggerEvents('input');
-        });
+        case 'arrow-upward':
+          keyButton.classList.add('keyboard-key');
+          keyButton.innerHTML = createOthers('🠕');
 
-        break;
+          keyButton.addEventListener('click', () => {
+            this.propertis.value += '🠕';
+            this.triggerEvents('input');
+          });
 
-      case 'arrow-forward': 
-        keyButton.classList.add('keyboard-key');
-        keyButton.innerHTML = createOthers('🠖');
+          break;
 
-        keyButton.addEventListener('click', () => {
-          this.propertis.value += '🠖';
-          this.triggerEvents('input');
-        });
-
-        break;
-
-      case 'arrow-upward': 
-        keyButton.classList.add('keyboard-key');
-        keyButton.innerHTML = createOthers('🠕');
-
-        keyButton.addEventListener('click', () => {
-          this.propertis.value += '🠕';
-          this.triggerEvents('input');
-        });
-
-        break;
-
-        case 'backspace': 
+        case 'backspace':
           keyButton.classList.add('keyboard-key-wide');
           keyButton.innerHTML = createOthers('Backspace');
 
@@ -207,7 +184,7 @@ const virtualKeyboard = {
 
           break;
 
-        case 'caps': 
+        case 'caps':
           keyButton.classList.add('keyboard-key-wide', 'keyboard-key-caps');
           keyButton.innerHTML = createOthers('CapsLock');
 
@@ -218,7 +195,7 @@ const virtualKeyboard = {
 
           break;
 
-        case 'enter': 
+        case 'enter':
           keyButton.classList.add('keyboard-key-wide');
           keyButton.innerHTML = createOthers('Enter');
 
@@ -229,7 +206,7 @@ const virtualKeyboard = {
 
           break;
 
-        case 'space': 
+        case 'space':
           keyButton.classList.add('keyboard-key-extra-wide');
           keyButton.innerHTML = createOthers('');
 
@@ -240,7 +217,7 @@ const virtualKeyboard = {
 
           break;
 
-        default: 
+        default:
           keyButton.textContent = key.toLowerCase();
 
           keyButton.addEventListener('click', () => {
@@ -250,18 +227,18 @@ const virtualKeyboard = {
 
           break;
       }
-      
+
       fragment.appendChild(keyButton);
 
       if (lineBR) {
         fragment.appendChild(document.createElement('br'));
       }
-    })
+    });
     return fragment;
   },
 
-  triggerEvents (eventName) {
-    if (typeof this.event[eventName] == 'function') {
+  triggerEvents(eventName) {
+    if (typeof this.event[eventName] === 'function') {
       this.event[eventName](this.propertis.value);
     }
   },
@@ -273,7 +250,7 @@ const virtualKeyboard = {
       if (key.childElementCount === 0) {
         key.textContent = this.propertis.shift ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
       }
-    }  
+    }
   },
 
   toggleCapsLock() {
@@ -286,20 +263,21 @@ const virtualKeyboard = {
     }
   },
 
-  open (value, input) {
+  active(value, input) {
     this.propertis.value = value || '';
     this.event.input = input;
   },
 };
 
-document.onkeypress = function (event) {
-  console.log(event)
-}
+const textArea = document.createElement('textarea');
+textArea.className = 'keyboard-input';
+document.body.appendChild(textArea);
 
-const textArea = document.createElement('textarea')
-textArea.className ='keyboard-input'
-document.body.appendChild(textArea)
+let text = document.createElement('div');
+text.className = "text";
+text.innerHTML = "Клавиатура сделана для ОС Windows";
+document.body.appendChild(text);
 
-window.addEventListener("DOMContentLoaded", function() {
+window.addEventListener('DOMContentLoaded', () => {
   virtualKeyboard.init();
 });
