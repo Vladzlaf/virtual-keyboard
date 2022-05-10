@@ -181,3 +181,10 @@ body {
     align-items: center;
     background-color: azure;
 }
+
+.text {
+    position: fixed;
+    bottom: 30px;
+    font-size: 18px;
+
+}
