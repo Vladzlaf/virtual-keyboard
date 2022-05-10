@@ -3,6 +3,15 @@
 /* eslint-disable no-undef */
 /* eslint-disable max-len */
 /* eslint-disable no-restricted-syntax */
+const textArea = document.createElement('textarea');
+textArea.className = 'keyboard-input';
+document.body.appendChild(textArea);
+
+let text = document.createElement('div');
+text.className = "text";
+text.innerHTML = "Клавиатура сделана для ОС Windows";
+document.body.appendChild(text);
+
 const virtualKeyboard = {
   elements: {
     keyboard: '',
@@ -268,15 +277,6 @@ const virtualKeyboard = {
     this.event.input = input;
   },
 };
-
-const textArea = document.createElement('textarea');
-textArea.className = 'keyboard-input';
-document.body.appendChild(textArea);
-
-let text = document.createElement('div');
-text.className = "text";
-text.innerHTML = "Клавиатура сделана для ОС Windows";
-document.body.appendChild(text);
 
 window.addEventListener('DOMContentLoaded', () => {
   virtualKeyboard.init();
