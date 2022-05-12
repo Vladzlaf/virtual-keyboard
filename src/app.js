@@ -273,9 +273,9 @@ const textArea = document.createElement('textarea');
 textArea.className = 'keyboard-input';
 document.body.appendChild(textArea);
 
-let text = document.createElement('div');
-text.className = "text";
-text.innerHTML = "Клавиатура сделана для ОС Windows";
+const text = document.createElement('div');
+text.className = 'text';
+text.innerHTML = 'Клавиатура сделана для ОС Windows';
 document.body.appendChild(text);
 
 window.addEventListener('DOMContentLoaded', () => {
