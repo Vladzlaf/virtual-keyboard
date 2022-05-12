@@ -130,7 +130,6 @@ const virtualKeyboard = {
           keyButton.innerHTML = createOthers('Shift');
 
           keyButton.addEventListener('mousedown', () => {
-            keys = shiftKeys;
             this.shiftPress();
           });
 
